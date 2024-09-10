@@ -1,86 +1,44 @@
 #include <stdio.h>
 #include <stdint.h>
+#include <string.h>
 
-uint16_t logn = 8;
-uint16_t n = 256;
+uint8_t logn = 10;
+uint16_t n = 1024;
+uint32_t f[1024] = {2, 4, 0, 4, 0, 0, 1, 0, 3, 1, 3, 1, 2, 1, 1, 0, 4, 0, 4, 5, 1, 3, 2, 2, 2, 11, 0, 0, 0, 4, 5, 0, 5, 2, 0, 5, 0, 0, 1, 1, 0, 2, 0, 0, 5, 2, 2, 0, 4, 0, 0, 4, 0, 2, 1, 3, 3, 3, 2, 1, 0, 2, 2, 0, 1, 0, 2, 0, 0, 3, 2, 5, 2, 3, 2, 3, 5, 0, 8, 3, 1, 0, 0, 3, 0, 3, 5, 3, 3, 2, 0, 3, 1, 4, 4, 0, 0, 2, 1, 2, 0, 3, 2, 3, 1, 2, 3, 0, 0, 1, 1, 6, 1, 3, 0, 7, 2, 3, 1, 2, 1, 5, 2, 0, 1, 2, 2, 3, 3, 1, 4, 1, 1, 1, 1, 0, 2, 1, 2, 0, 2, 2, 0, 0, 4, 4, 1, 4, 2, 1, 4, 2, 3, 4, 0, 2, 1, 4, 2, 1, 2, 1, 1, 1, 1, 1, 2, 4, 3, 3, 6, 4, 1, 3, 3, 3, 0, 2, 4, 0, 0, 0, 0, 3, 2, 3, 3, 0, 0, 0, 2, 2, 1, 1, 0, 1, 1, 2, 2, 1, 0, 2, 4, 1, 1, 0, 2, 2, 1, 1, 4, 2, 5, 1, 0, 0, 1, 4, 0, 1, 4, 2, 0, 0, 2, 1, 0, 5, 2, 1, 0, 0, 0, 6, 4, 2, 3, 5, 1, 1, 0, 1, 2, 4, 0, 2, 1, 3, 0, 1, 3, 2, 2, 1, 2, 0, 0, 2, 2, 2, 3, 1, 2, 3, 1, 1, 2, 0, 1, 0, 1, 0, 2, 0, 1, 7, 4, 0, 1, 1, 4, 0, 0, 2, 3, 1, 5, 2, 3, 4, 1, 2, 3, 1, 0, 0, 2, 2, 2, 6, 1, 3, 1, 5, 5, 2, 1, 1, 0, 4, 4, 0, 1, 1, 1, 0, 5, 1, 2, 0, 3, 4, 0, 3, 1, 0, 1, 0, 0, 1, 1, 2, 1, 1, 4, 3, 2, 1, 4, 2, 3, 1, 6, 7, 2, 1, 1, 3, 2, 1, 0, 4, 3, 4, 1, 0, 2, 2, 3, 0, 2, 2, 2, 2, 1, 2, 0, 1, 5, 0, 0, 2, 1, 1, 2, 6, 4, 2, 0, 3, 2, 1, 0, 9, 0, 4, 3, 0, 2, 1, 0, 0, 0, 0, 6, 2, 1, 1, 1, 2, 5, 3, 1, 0, 2, 5, 2, 2, 2, 0, 4, 3, 5, 3, 3, 4, 3, 1, 3, 0, 3, 0, 0, 1, 1, 2, 6, 1, 0, 0, 0, 5, 2, 1, 0, 0, 4, 2, 5, 0, 2, 0, 0, 4, 1, 1, 3, 0, 0, 1, 0, 3, 1, 0, 2, 2, 1, 1, 2, 2, 3, 2, 5, 1, 1, 4, 0, 0, 2, 3, 4, 3, 1, 2, 2, 1, 2, 4, 3, 0, 0, 0, 3, 3, 0, 2, 5, 0, 5, 1, 2, 1, 1, 2, 6, 0, 2, 1, 0, 0, 0, 3, 1, 0, 2, 1, 2, 1, 0, 0, 4, 4, 1, 0, 3, 4, 1, 4, 6, 1, 6, 2, 0, 2, 3, 0, 2, 2, 1, 1, 0, 0, 4, 0, 2, 1, 3, 0, 1, 3, 1, 1, 4, 3, 3, 0, 0, 2, 0, 4, 4, 0, 0, 2, 2, 4, 3, 3, 4, 0, 1, 2, 0, 0, 1, 0, 1, 4, 4, 2, 0, 3, 2, 4, 1, 1, 2, 4, 0, 1, 0, 5, 4, 3, 0, 3, 0, 7, 3, 5, 3, 1, 2, 2, 5, 2, 2, 4, 1, 3, 3, 4, 1, 1, 0, 0, 2, 3, 0, 0, 3, 0, 0, 1, 3, 3, 2, 2, 0, 4, 4, 1, 0, 3, 0, 5, 1, 0, 0, 2, 3, 0, 1, 3, 0, 3, 1, 2, 3, 1, 1, 0, 0, 6, 6, 2, 2, 0, 0, 1, 0, 0, 3, 4, 4, 1, 2, 0, 1, 3, 3, 1, 5, 0, 1, 5, 2, 4, 3, 3, 1, 1, 3, 5, 1, 3, 2, 4, 2, 2, 0, 3, 3, 0, 0, 0, 0, 2, 0, 5, 0, 2, 4, 1, 3, 0, 3, 2, 1, 1, 7, 3, 1, 2, 1, 6, 0, 4, 4, 2, 3, 3, 1, 1, 1, 0, 1, 0, 0, 2, 1, 3, 1, 0, 0, 4, 5, 3, 0, 0, 0, 1, 3, 3, 5, 5, 4, 0, 2, 0, 0, 0, 2, 3, 2, 3, 3, 0, 4, 1, 4, 2, 5, 2, 0, 1, 2, 0, 4, 2, 2, 0, 1, 3, 2, 0, 1, 3, 1, 0, 1, 0, 0, 1, 0, 5, 0, 2, 4, 4, 1, 4, 2, 0, 1, 1, 2, 0, 2, 5, 4, 1, 4, 0, 7, 2, 5, 0, 0, 1, 4, 0, 1, 0, 2, 3, 2, 1, 0, 3, 3, 3, 1, 0, 2, 0, 0, 1, 4, 1, 1, 3, 3, 5, 1, 2, 3, 3, 1, 2, 4, 4, 0, 0, 0, 2, 2, 4, 6, 0, 4, 2, 0, 5, 2, 1, 3, 2, 2, 0, 2, 2, 1, 0, 0, 2, 2, 2, 2, 0, 4, 1, 1, 0, 0, 5, 3, 0, 1, 2, 1, 2, 2, 3, 2, 1, 1, 0, 2, 3, 7, 0, 1, 1, 6, 5, 0, 3, 0, 2, 3, 0, 1, 4, 2, 1, 0, 4, 0, 1, 1, 4, 2, 7, 3, 3, 3, 0, 0, 0, 5, 2, 1, 6, 5, 2, 0, 0, 0, 5, 6, 3, 3, 0, 3, 0, 3, 4, 1, 0, 2, 0, 0, 2, 2, 1, 3, 5, 0, 0, 3, 1, 6, 3, 0, 2, 3, 2, 3, 2, 0, 1, 1, 1, 2, 0, 3, 1, 2, 0, 1, 1, 2, 2, 5, 0, 0, 9, 2, 1, 7, 2, 1, 3, 2, 0, 2, 4, 0, 0, 4, 0, 2, 1, 2, 3, 3, 1, 2, 2, 0, 3, 1, 0, 2, 0, 2, 0, 2, 4, 2, 3, 4, 2, 5, 1, 2, 1, 0, 2, 2, 5, 0, 3, 4, 1, 1, 4, 2, 4, 3, 5, 3, 1};
+uint32_t g[1024] = {3, 2, 4, 4, 4, 1, 1, 0, 5, 2, 0, 2, 0, 0, 1, 3, 3, 3, 0, 2, 1, 1, 3, 1, 0, 4, 3, 0, 6, 2, 4, 2, 0, 2, 0, 4, 0, 2, 2, 4, 2, 0, 0, 2, 0, 0, 1, 1, 3, 5, 7, 2, 1, 4, 1, 1, 1, 4, 1, 3, 3, 2, 0, 0, 0, 4, 1, 3, 1, 2, 0, 1, 4, 1, 0, 4, 3, 2, 5, 2, 0, 5, 1, 0, 2, 3, 2, 1, 0, 3, 3, 1, 2, 4, 2, 1, 1, 3, 1, 0, 1, 3, 0, 3, 1, 0, 1, 0, 5, 0, 2, 0, 1, 3, 2, 3, 3, 4, 0, 4, 0, 5, 4, 6, 3, 1, 4, 0, 1, 3, 2, 0, 1, 3, 5, 0, 1, 3, 5, 2, 2, 0, 0, 3, 1, 0, 4, 0, 4, 4, 0, 0, 1, 4, 1, 1, 1, 1, 3, 2, 0, 2, 5, 4, 4, 0, 0, 0, 0, 1, 0, 3, 3, 3, 4, 1, 2, 1, 4, 2, 0, 5, 0, 1, 1, 4, 1, 3, 4, 0, 5, 0, 2, 3, 5, 2, 6, 0, 4, 2, 2, 1, 0, 2, 3, 0, 1, 1, 1, 1, 3, 2, 0, 0, 0, 6, 0, 0, 4, 3, 1, 1, 2, 2, 2, 3, 1, 0, 2, 1, 0, 1, 1, 5, 0, 4, 2, 0, 0, 0, 4, 5, 2, 0, 4, 1, 0, 1, 2, 3, 3, 0, 0, 2, 3, 1, 0, 3, 5, 0, 4, 1, 2, 0, 1, 0, 0, 8, 1, 0, 0, 0, 0, 1, 0, 3, 6, 2, 1, 0, 4, 1, 3, 0, 1, 1, 6, 4, 8, 1, 2, 1, 0, 3, 2, 0, 0, 0, 1, 0, 3, 0, 7, 2, 2, 4, 9, 0, 1, 1, 0, 1, 0, 3, 2, 5, 4, 1, 3, 8, 3, 3, 0, 4, 4, 0, 2, 2, 2, 5, 3, 1, 6, 0, 5, 2, 4, 0, 2, 3, 1, 3, 0, 0, 0, 1, 3, 7, 2, 2, 2, 0, 2, 4, 2, 1, 4, 0, 1, 1, 1, 0, 2, 1, 4, 4, 0, 3, 1, 0, 2, 1, 3, 0, 1, 3, 1, 0, 0, 4, 2, 3, 1, 2, 1, 0, 0, 3, 1, 7, 2, 0, 0, 1, 0, 1, 6, 4, 2, 2, 2, 5, 0, 0, 1, 0, 1, 3, 2, 5, 6, 2, 7, 1, 1, 0, 3, 1, 2, 0, 1, 1, 2, 3, 1, 2, 4, 1, 0, 3, 1, 2, 0, 2, 3, 0, 2, 0, 1, 1, 2, 2, 1, 0, 4, 2, 0, 0, 1, 0, 0, 1, 0, 2, 4, 7, 1, 1, 5, 1, 1, 4, 2, 2, 6, 0, 0, 0, 3, 1, 2, 5, 0, 0, 3, 3, 0, 1, 1, 3, 4, 0, 3, 0, 0, 1, 2, 2, 3, 1, 0, 2, 1, 0, 1, 0, 1, 2, 2, 3, 0, 0, 5, 0, 4, 6, 5, 3, 2, 3, 0, 3, 1, 2, 2, 1, 6, 3, 1, 3, 0, 4, 0, 0, 5, 2, 0, 9, 4, 2, 7, 4, 2, 2, 1, 0, 3, 2, 3, 4, 1, 3, 0, 1, 6, 2, 0, 0, 1, 4, 1, 2, 4, 2, 0, 3, 0, 3, 5, 0, 7, 0, 1, 5, 0, 4, 0, 2, 0, 1, 3, 5, 1, 1, 1, 0, 0, 3, 3, 1, 1, 4, 2, 4, 0, 2, 1, 1, 1, 1, 2, 3, 3, 2, 3, 3, 2, 3, 1, 1, 4, 6, 2, 3, 0, 3, 3, 1, 1, 5, 3, 2, 2, 0, 1, 1, 0, 0, 1, 0, 2, 1, 3, 0, 1, 0, 2, 2, 2, 2, 3, 2, 0, 5, 1, 3, 0, 3, 1, 3, 3, 4, 2, 0, 3, 2, 0, 2, 2, 0, 0, 0, 3, 3, 2, 2, 1, 1, 1, 0, 1, 1, 0, 1, 4, 1, 8, 3, 3, 0, 3, 0, 2, 2, 1, 0, 2, 0, 4, 5, 1, 1, 5, 2, 1, 1, 0, 3, 2, 0, 0, 0, 1, 0, 2, 4, 0, 1, 1, 3, 2, 0, 2, 0, 1, 0, 3, 0, 0, 3, 0, 1, 1, 1, 0, 1, 0, 0, 2, 2, 1, 1, 3, 0, 4, 3, 0, 5, 1, 1, 2, 3, 5, 0, 3, 2, 2, 0, 2, 0, 3, 2, 2, 0, 2, 5, 2, 3, 5, 2, 0, 7, 4, 0, 1, 0, 1, 3, 2, 1, 5, 2, 2, 2, 0, 0, 0, 2, 0, 0, 0, 1, 2, 1, 2, 2, 2, 0, 3, 1, 4, 3, 3, 0, 1, 6, 0, 1, 2, 4, 2, 3, 2, 1, 0, 6, 0, 3, 4, 4, 0, 0, 0, 2, 2, 1, 1, 0, 1, 4, 2, 3, 7, 0, 2, 6, 1, 5, 4, 0, 4, 2, 3, 0, 2, 0, 0, 1, 0, 1, 2, 2, 4, 6, 0, 1, 0, 4, 0, 1, 3, 1, 3, 3, 0, 4, 6, 4, 2, 1, 0, 0, 0, 0, 6, 1, 1, 3, 0, 1, 0, 3, 2, 2, 1, 0, 2, 0, 0, 3, 1, 0, 0, 0, 2, 0, 2, 4, 3, 4, 3, 1, 0, 2, 1, 3, 2, 1, 1, 3, 2, 3, 2, 0, 1, 1, 2, 5, 2, 9, 3, 0, 2, 3, 2, 0, 2, 0, 0, 1, 2, 2, 0, 3, 3, 3, 2, 0, 1, 3, 1, 4, 2, 0, 0, 0, 2, 0, 3, 1, 0, 4, 0, 1, 2, 2, 1, 0, 2, 2, 4, 0, 0, 0, 1, 2, 4, 5, 5, 2, 2, 2, 2, 6, 0, 0, 2, 0, 1, 0, 1, 5, 0, 5, 1, 4, 2, 4, 0, 4, 4, 3, 3, 0, 3, 1, 2, 1, 5, 0, 1, 3, 6, 3, 3, 3, 2, 3, 1, 4, 0, 3, 1, 2, 0, 3, 2, 5, 2, 0, 0, 4, 0, 1, 2, 2, 2, 1, 3, 0, 0, 3, 6, 0, 0, 1, 0, 3, 3, 2, 2, 2, 0, 3};
+uint32_t h[1024] = {0};
+
 
 uint32_t p = 16760833;
+uint32_t omegas[256] = {4194048, 5731211, 2168626, 11596923, 365533, 10897916, 13231863, 1549698, 12162530, 15282356, 10227554, 5513072, 1099823, 15083543, 6687441, 6234516, 1391488, 4101579, 14683280, 15419962, 5999281, 12811985, 4615611, 8355928, 9456454, 5826375, 2467394, 3963218, 11686617, 10589780, 12603334, 11070395, 2041272, 12500425, 480588, 10136154, 9421437, 266403, 2327807, 12144579, 1607954, 14490637, 439068, 14295521, 10876631, 16448023, 10542897, 11084477, 10059753, 4948921, 8507638, 10038424, 14581557, 16246124, 4488587, 11418359, 10601440, 5081327, 8352680, 13805722, 3104756, 13679938, 9708390, 5997367, 6994530, 8698511, 14963320, 6855990, 15044406, 15313794, 1362861, 5300945, 11631221, 10211558, 8437969, 12734227, 13663885, 4184707, 10292427, 15019000, 16101275, 9023828, 7467917, 13016815, 2265947, 15798365, 530430, 15928658, 6817155, 13152067, 6102480, 14633048, 16218269, 10433796, 15143689, 1572066, 1861060, 11650029, 16236338, 6900376, 11959950, 7972597, 12854798, 13029343, 2251032, 11929610, 7564545, 951923, 12000572, 681008, 13980726, 9195099, 4830428, 7804512, 3423584, 13862268, 3387958, 13307992, 12166036, 6830872, 7354801, 15950307, 801738, 6920206, 3034156, 1295043, 6240597, 2929488, 12566785, 11029622, 14592207, 5163910, 16395300, 5862917, 3528970, 15211135, 4598303, 1478477, 6533279, 11247761, 15661010, 1677290, 10073392, 10526317, 15369345, 12659254, 2077553, 1340871, 10761552, 3948848, 12145222, 8404905, 7304379, 10934458, 14293439, 12797615, 5074216, 6171053, 4157499, 5690438, 14719561, 4260408, 16280245, 6624679, 7339396, 16494430, 14433026, 4616254, 15152879, 2270196, 16321765, 2465312, 5884202, 312810, 6217936, 5676356, 6701080, 11811912, 8253195, 6722409, 2179276, 514709, 12272246, 5342474, 6159393, 11679506, 8408153, 2955111, 13656077, 3080895, 7052443, 10763466, 9766303, 8062322, 1797513, 9904843, 1716427, 1447039, 15397972, 11459888, 5129612, 6549275, 8322864, 4026606, 3096948, 12576126, 6468406, 1741833, 659558, 7737005, 9292916, 3744018, 14494886, 962468, 16230403, 832175, 9943678, 3608766, 10658353, 2127785, 542564, 6327037, 1617144, 15188767, 14899773, 5110804, 524495, 9860457, 4800883, 8788236, 3906035, 3731490, 14509801, 4831223, 9196288, 15808910, 4760261, 16079825, 2780107, 7565734, 11930405, 8956321, 13337249, 2898565, 13372875, 3452841, 4594797, 9929961, 9406032, 810526, 15959095, 9840627, 13726677, 15465790, 10520236, 13831345};
+uint8_t total_power[128] = {1, 129, 65, 193, 33, 161, 97, 225, 17, 145, 81, 209, 49, 177, 113, 241, 9, 137, 73, 201, 41, 169, 105, 233, 25, 153, 89, 217, 57, 185, 121, 249, 5, 133, 69, 197, 37, 165, 101, 229, 21, 149, 85, 213, 53, 181, 117, 245, 13, 141, 77, 205, 45, 173, 109, 237, 29, 157, 93, 221, 61, 189, 125, 253, 3, 131, 67, 195, 35, 163, 99, 227, 19, 147, 83, 211, 51, 179, 115, 243, 11, 139, 75, 203, 43, 171, 107, 235, 27, 155, 91, 219, 59, 187, 123, 251, 7, 135, 71, 199, 39, 167, 103, 231, 23, 151, 87, 215, 55, 183, 119, 247, 15, 143, 79, 207, 47, 175, 111, 239, 31, 159, 95, 223, 63, 191, 127, 255};
+
 uint32_t p0i = 4043292671; // p0i = -1/p mod 2^32
 uint32_t r2 = 13696128; // r squared in modulo p, r = 2^32.
 uint32_t inv2 = 2097024; // in Montgomery form
 
 
-uint32_t f[256] = {1, 0, 2, 4, 1, 0, 0, 3, 0, 2, 5, 3, 0, 1, 2, 5, 3, 0, 3, 2, 1, 0, 1, 2, 2, 1, 3, 0, 0, 1, 1, 0, 2, 4, 1, 0, 1, 2, 3, 1, 0, 2, 0, 1, 0, 5, 2, 3, 2, 3, 1, 2, 2, 2, 3, 0, 4, 2, 1, 1, 1, 1, 1, 5, 4, 0, 0, 3, 0, 6, 0, 7, 4, 7, 2, 1, 1, 3, 1, 3, 4, 2, 4, 2, 3, 2, 4, 6, 3, 6, 3, 1, 0, 0, 1, 0, 3, 4, 3, 0, 0, 2, 7, 2, 6, 5, 4, 1, 1, 0, 1, 1, 3, 0, 0, 0, 2, 0, 1, 5, 1, 1, 1, 2, 2, 0, 4, 1, 0, 1, 0, 2, 5, 2, 2, 3, 2, 1, 4, 2, 3, 4, 8, 3, 1, 0, 3, 0, 5, 3, 1, 1, 1, 6, 7, 0, 1, 2, 2, 5, 1, 6, 6, 0, 3, 0, 1, 4, 1, 0, 6, 0, 0, 5, 0, 2, 3, 0, 2, 0, 1, 3, 1, 0, 1, 1, 0, 7, 0, 1, 2, 2, 0, 3, 0, 1, 0, 0, 1, 3, 0, 1, 5, 4, 1, 0, 0, 4, 1, 4, 5, 3, 2, 3, 4, 3, 0, 0, 1, 1, 1, 0, 4, 2, 3, 4, 2, 0, 1, 2, 0, 3, 3, 2, 4, 2, 1, 2, 1, 2, 3, 0, 5, 5, 2, 2, 4, 3, 1, 1, 5, 1, 1, 0, 4, 3};
-uint32_t g[256] = {3, 0, 1, 0, 3, 3, 2, 2, 1, 2, 3, 0, 1, 1, 4, 4, 2, 3, 4, 2, 2, 1, 3, 3, 3, 1, 2, 0, 0, 0, 0, 1, 1, 3, 5, 2, 0, 6, 3, 2, 2, 6, 2, 5, 1, 3, 0, 1, 6, 1, 3, 1, 7, 0, 3, 6, 0, 1, 0, 2, 2, 0, 0, 1, 1, 0, 0, 2, 5, 4, 6, 6, 0, 2, 4, 1, 0, 0, 3, 3, 5, 1, 1, 3, 0, 0, 3, 5, 1, 1, 1, 6, 1, 0, 3, 2, 4, 1, 0, 0, 3, 1, 1, 5, 0, 2, 0, 0, 0, 0, 2, 1, 1, 0, 3, 4, 2, 0, 4, 3, 1, 5, 1, 5, 5, 2, 8, 1, 4, 6, 3, 2, 0, 1, 1, 2, 2, 3, 0, 1, 1, 0, 2, 0, 0, 2, 0, 5, 3, 2, 1, 0, 3, 1, 3, 1, 1, 0, 2, 6, 0, 0, 0, 2, 0, 5, 3, 2, 1, 8, 6, 4, 4, 2, 3, 0, 4, 2, 1, 4, 0, 2, 0, 0, 1, 3, 0, 1, 1, 1, 5, 4, 6, 0, 1, 0, 2, 8, 0, 4, 1, 1, 4, 1, 0, 0, 2, 2, 0, 1, 2, 4, 0, 0, 0, 1, 0, 3, 1, 3, 2, 4, 2, 6, 2, 1, 2, 0, 2, 0, 0, 4, 0, 3, 0, 6, 2, 4, 1, 0, 7, 0, 0, 6, 4, 3, 1, 0, 4, 2, 2, 0, 1, 1, 0, 0};
-const uint32_t omegas[64] = {4194048, 14494886, 15152879, 3034156, 16101275, 9421437, 9406032, 3096948, 14719561, 3387958, 11631221, 11686617, 11930405, 1716427, 7304379, 12000572, 6994530, 5999281, 14509801, 13656077, 15369345, 11959950, 10601440, 1099823, 14899773, 2179276, 4598303, 16218269, 10059753, 365533, 9943678, 5884202, 12566785, 2265947, 1607954, 13726677, 659558, 7339396, 7354801, 13663885, 2041272, 13372875, 5129612, 5074216, 4830428, 15044406, 9456454, 4760261, 9766303, 10761552, 2251032, 3104756, 1391488, 4800883, 6159393, 15661010, 1861060, 14581557, 12162530, 542564, 6701080, 16395300, 6817155, 10876631};
-
-uint8_t total_power[32] = {1, 33, 17, 49, 9, 41, 25, 57, 5, 37, 21, 53, 13, 45, 29, 61, 3, 35, 19, 51, 11, 43, 27, 59, 7, 39, 23, 55, 15, 47, 31, 63};
-
 static inline uint32_t tbmask(uint32_t x) {
 	return (uint32_t)(*(int32_t *)&x >> 31);
 }
+
 static inline uint32_t mp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
 	uint64_t z = (uint64_t)a * (uint64_t)b;
 	uint32_t w = (uint32_t)z * p0i;
 	uint32_t d = (uint32_t)((z + (uint64_t)w * (uint64_t)p) >> 32) - p;
 	return d + (p & tbmask(d));
 }
-static inline uint32_t mp_montypow(uint32_t base_mont, uint32_t exp, uint32_t p, uint32_t p0i) {
-    uint32_t result_mont = 1;    // Initialize result to 1 in Montgomery form
-
-    while (exp > 0) {
-        // If the exponent is odd, multiply the result with base
-        if (exp & 1) {
-            result_mont = mp_montymul(result_mont, base_mont, p, p0i);
-        }
-
-        // Square the base: base = base^2 mod p (Montgomery multiplication)
-        base_mont = mp_montymul(base_mont, base_mont, p, p0i);
-
-        // Right shift the exponent by 1
-        exp >>= 1;
-    }
-
-    // Since the input and result are in Montgomery form, return result_mont without additional conversion.
-    return result_mont;
-}
-
-
-
-
-
-// static inline uint32_t mp_add(uint32_t a, uint32_t b, uint32_t p) {
-// 	uint32_t d = a + b - p;
-// 	return d + (p & tbmask(d));
-// }
 
 static inline uint32_t mp_add(uint32_t a, uint32_t b, uint32_t p) {
-	uint32_t d = a + b;
-    if (d>=p)
-    {
-        d -= p;
-        return d;
-    }
-    return d;
+	uint32_t d = a + b - p;
+ 	return d + (p & tbmask(d));
 }
 
-// static inline uint32_t mp_sub(uint32_t a, uint32_t b, uint32_t p) {
-// 	uint32_t d = a - b;
-// 	return d + (p & tbmask(d));
-// }
 
 static inline uint32_t mp_sub(uint32_t a, uint32_t b, uint32_t p) {
-	uint32_t d = a + p;
-    d = d - b;
-
-    if (d>=p)
-    {
-        d -= p;
-        return d;
-    }
-    return d;
+ 	uint32_t d = a - b;
+ 	return d + (p & tbmask(d));
 }
-
 
 void to_mont_form(uint32_t *f, size_t n, uint32_t r2, uint32_t p, uint32_t p0i) {
     for (size_t i = 0; i < n; i++) {
@@ -95,71 +53,89 @@ void de_mont_form(uint32_t *f, size_t n, uint32_t r2, uint32_t p, uint32_t p0i) 
 }
 
 
-void StepDown(int layer, uint32_t *f, int n, uint8_t *total_power, int logn, uint32_t p, uint32_t p0i) {
-    // Twiddle factors (apply Montgomery multiplication)
-    int step_size = 1 << (logn - 3 - layer);
 
-    int ptr = n >> (layer + 1);
-    for (int j = 0; j < (1 << layer); j++) {
-        for (int i = 0; i < (n >> (layer + 1)); i++) {
-            // Apply the twiddle factors using Montgomery multiplication
-            f[ptr + i] = mp_montymul(f[ptr + i], omegas[(n>>(layer+4))*total_power[j*(step_size)]], p, p0i);
+void PRINT(uint32_t *f, uint16_t n)
+{
+    printf("\n[");
+	for (size_t i = 0; i < n; i++)
+	{
+		printf("%d, ", f[i]);
+	}
+    printf("\b\b]\n");
+}
 
+void PRINT_NonMont(uint32_t *f, uint16_t n)
+{
+    de_mont_form(f,n,r2,p,p0i);
+    PRINT(f,n);
+    to_mont_form(f,n,r2,p,p0i);
+}
+
+
+
+void StepDown(int layer, uint32_t *f) {
+    uint32_t step_size = 1 << (logn - 3 - layer);
+    uint32_t ptr = 1 << (logn - layer - 1);
+
+    // Twiddle
+    for (size_t j = 0; j < (1 << layer); j++) {
+        for (size_t i = 0; i < (1 << (logn - layer - 1)); i++) {
+            size_t idx = ptr + i;
+            f[idx] = mp_montymul(f[idx], omegas[(1 << (logn - layer - 4)) * total_power[j * step_size]], p, p0i);
         }
-        ptr += (n >> layer);
+        ptr += (1 << (logn - layer));
     }
 
-    // Cooley-Tukey butterfly using Montgomery addition and subtraction
-    uint32_t f_temp[n]; // Temporary storage for f
-    for (int i = 0; i < n; i++) {
-        f_temp[i] = f[i];
-    }
-
-    int d = (n >> (layer + 1)); // Distance
+    // CT Butterfly
+    uint32_t f_temp[n]; // Assuming n is the size of f
+    memcpy(f_temp, f, n * sizeof(uint32_t));
+    uint32_t d = (1 << (logn - layer - 1));
     ptr = 0;
-    for (int j = 0; j < (1 << layer); j++) {
-        for (int i = 0; i < (n >> (layer + 1)); i++) {
-            f[ptr + i] = mp_add(f_temp[ptr + i], f_temp[ptr + d + i], p); // Addition (butterfly operation)
-            f[ptr + d + i] = mp_sub(f_temp[ptr + i], f_temp[ptr + d + i], p); // Subtraction (butterfly operation)
+    for (size_t j = 0; j < (1 << layer); j++) {
+        for (size_t i = 0; i < d; i++) {
+            f[ptr + i] = mp_add(f_temp[ptr + i], f_temp[ptr + d + i], p);
+            f[ptr + d + i] = mp_sub(f_temp[ptr + i], f_temp[ptr + d + i], p);
         }
-        ptr += (n >> layer);
+        ptr += (1 << (logn - layer));
     }
 }
 
-void StepUp(int layer, uint32_t *f, int n, uint8_t *total_power, int logn, uint32_t p, uint32_t p0i) {
-    // Cooley-Tukey butterfly using Montgomery addition and subtraction
-    uint32_t f_temp[n]; // Temporary storage for f
-    for (int i = 0; i < n; i++) {
-        f_temp[i] = f[i];
-    }
+void StepUp(int layer, uint32_t *f) {
+    // CT Butterfly
+    uint32_t f_temp[n]; // Assuming n is the size of f
+    memcpy(f_temp, f, n * sizeof(uint32_t));
+    uint32_t d = (n >> (layer + 1)); // distance
+    uint32_t ptr = 0;
+    for (size_t j = 0; j < (1 << layer); j++) {
+        for (size_t i = 0; i < (1 << (logn - layer - 1)); i++) {
 
-    int d = (n >> (layer + 1)); // Distance
-    int ptr = 0;
-    for (int j = 0; j < (1 << layer); j++) {
-        for (int i = 0; i < (n >> (layer + 1)); i++) {
-            f[ptr + i] = mp_add(f_temp[ptr + i], f_temp[ptr + d + i], p); // Addition (butterfly operation)
-            f[ptr + d + i] = mp_sub(f_temp[ptr + i], f_temp[ptr + d + i], p); // Subtraction (butterfly operation)
+            f[ptr + i] = mp_add(f_temp[ptr + i], f_temp[ptr + d + i], p);
+            f[ptr + d + i] = mp_sub(f_temp[ptr + i], f_temp[ptr + d + i], p);
+
         }
-        ptr += (n >> layer);
+        ptr += (1 << (logn - layer));
     }
 
-    // Twiddle factors (inverse twiddle)
-    int step_size = 1 << (logn - 3 - layer);
-    ptr = n >> (layer + 1);
-    
-    for (int j = 0; j < (1 << layer); j++) {
-        for (int i = 0; i < (n >> (layer + 1)); i++) {
-            // Apply the twiddle factors using Montgomery multiplication (inverse twiddle factors)
-            f[ptr + i] = mp_montymul(f[ptr + i], omegas[(n>>2)-((n>>(layer+4))*total_power[j*(step_size)])], p, p0i);
+
+
+    // Twiddle
+    uint32_t step_size = 1 << (logn - 3 - layer);
+    ptr = 1 << (logn - layer - 1);
+    for (size_t j = 0; j < (1 << layer); j++) {
+        for (size_t i = 0; i < (1 << (logn - layer - 1)); i++) {
+            size_t idx = ptr + i;
+            f[idx] = mp_montymul(f[idx], omegas[(1 << (logn - 2)) - ((1 << (logn - layer - 4)) * total_power[j * step_size])], p, p0i);
         }
-        ptr += (n >> layer);
+        ptr += (1 << (logn - layer));
     }
 
-    // Normalization (dividing by 2 in Montgomery space)
-    for (int i = 0; i < n; i++) {
-        f[i] = mp_montymul(f[i], inv2, p, p0i); // Montgomery reduction by 2
+    // Normalization
+    for (size_t i = 0; i < n; i++) {
+        f[i] = mp_montymul(f[i], inv2, p, p0i);
     }
 }
+
+
 
 
 void TMVP_base(uint32_t *f_small_8,uint32_t *g_small_8, uint32_t twiddle, uint32_t *result) {
@@ -178,43 +154,54 @@ void TMVP_base(uint32_t *f_small_8,uint32_t *g_small_8, uint32_t twiddle, uint32
     for (int i = 0; i < 8; i++) {
         result[i] = 0;
         for (int j = 0; j < 8; j++) {
-            result[i] += mp_montymul(g_small_8[j],toep[i + 7 - j],p,p0i);
+            result[i] = mp_add(result[i], mp_montymul(g_small_8[j],toep[i + 7 - j],p,p0i),p);
         }
     }
 }
 
 
-//extern void TMVP_base_int(int *f_small_8, int *g_small_8, int *twiddle, int *result);
+int main()
+{
 
-int main() {
-    uint32_t h[256] = {0};  // Initialize h with zeros
+
+    to_mont_form(f, n, r2, p, p0i);
+    to_mont_form(g, n, r2, p, p0i);
+
+
+    StepDown(0, f);
+    StepDown(0, g);
+
+    StepDown(1, f);
+    StepDown(1, g);
+
+    StepDown(2, f);
+    StepDown(2, g);
+
+    StepDown(3, f);
+    StepDown(3, g);
+
+
+    StepDown(4, f);
+    StepDown(4, g);
+
     
+    StepDown(5, f);
+    StepDown(5, g);
 
-    
+    StepDown(6, f);
+    StepDown(6, g);
 
-    // mont_form of f and g
-    to_mont_form(f,n,r2,p,p0i);
-    to_mont_form(g,n,r2,p,p0i);
+    PRINT_NonMont(f,n);
+    PRINT_NonMont(g,n);
 
-    StepDown(0,f,n,total_power,logn,p,p0i);
-    StepDown(1,f,n,total_power,logn,p,p0i);
-    StepDown(2,f,n,total_power,logn,p,p0i);
-    StepDown(3,f,n,total_power,logn,p,p0i);
-    StepDown(4,f,n,total_power,logn,p,p0i);
-
-    StepDown(0,g,n,total_power,logn,p,p0i);
-    StepDown(1,g,n,total_power,logn,p,p0i);
-    StepDown(2,g,n,total_power,logn,p,p0i);
-    StepDown(3,g,n,total_power,logn,p,p0i);
-    StepDown(4,g,n,total_power,logn,p,p0i);
+// TMVP
 
 
-    // TMVP operation on blocks of 8
     for (int i = 0; i < n; i += 8) {
         uint32_t result[8] = {0};  // Temporary result for TMVP_base
         uint32_t twiddle = omegas[i / 8];  // Compute omega^total_power
         TMVP_base(&f[i], &g[i], omegas[total_power[i>>3]], result);
-        
+
         // Copy the result back to h
         for (int j = 0; j < 8; j++) {
             h[i + j] = result[j];
@@ -222,53 +209,32 @@ int main() {
     }
 
 
-
-
-    StepUp(4,h,n,total_power,logn,p,p0i);
-    printf("\n\n\n");
-
-    de_mont_form(h,n,r2,p,p0i);
-
-    // Print the result array h
-    printf("[");
-    for (int i = 0; i < n; i++) {
-        printf("%u, ", h[i]);
-    }
-    printf("\b\b]");
-
-    // StepUp(3,h,n,total_power,logn,p,p0i);
-    // StepUp(2,h,n,total_power,logn,p,p0i);
-    // StepUp(1,h,n,total_power,logn,p,p0i);
-    // StepUp(0,h,n,total_power,logn,p,p0i);
-
-
-
-    // StepUp(4,f,n,total_power,logn,p,p0i);
-    // StepUp(3,f,n,total_power,logn,p,p0i);
-    // StepUp(2,f,n,total_power,logn,p,p0i);
-    // StepUp(1,f,n,total_power,logn,p,p0i);
-    // StepUp(0,f,n,total_power,logn,p,p0i);
-
-
-    // StepUp(4,g,n,total_power,logn,p,p0i);
-    // StepUp(3,g,n,total_power,logn,p,p0i);
-    // StepUp(2,g,n,total_power,logn,p,p0i);
-    // StepUp(1,g,n,total_power,logn,p,p0i);
-    // StepUp(0,g,n,total_power,logn,p,p0i);
+// StepUp
 
 
 
 
-    // de_mont_form(f,n,r2,p,p0i);
-    // de_mont_form(g,n,r2,p,p0i);
+    // printf("Hi! %d, ", mp_montymul( mp_montymul( mp_montymul(mp_sub(h[4],h[12],p), omegas[3] ,p,p0i), inv2,p,p0i)   ,1,p,p0i)  );
 
-    // printf("[");
-    // for (size_t i = 0; i < 256; i++)
-    // {
-    //     printf("%d, ", g[i]);
-    // }
-    // printf("\b\b]");
-    
+    StepUp(6, h);
+    StepUp(5, h);
+    StepUp(4, h);
+    StepUp(3, h);
+    StepUp(2, h);
+    StepUp(1, h);
+    StepUp(0, h);
 
-    return 0;
+
+
+    de_mont_form(h, n, r2, p, p0i);
+
+    PRINT(h,n);
+
+
+
+
+
+
+
+    	return 0;
 }
