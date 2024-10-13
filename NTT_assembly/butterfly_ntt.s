@@ -1,7 +1,7 @@
-    .global butterfly_two_layers_ntt
+    .global _butterfly_two_layers_ntt
     .text
 
-butterfly_two_layers_ntt:
+_butterfly_two_layers_ntt:
     // Function parameters:
     // x0: int32_t *f      (pointer to array f)
     // w1: uint32_t i      (index i)
@@ -30,21 +30,21 @@ butterfly_two_layers_ntt:
 
     // First layer twiddle multiplication for f[i + 2*d]
     // A = w14, B = w3 (twiddle factor w1)
-    MUL     x14, x14, x3             // x14 = A * B mod 2^64
+    SMULL   x14, w14, w3             // x14 = A * B mod 2^64
     MUL     x14, x14, x7             // x14 = (A * B) * R mod 2^64
     LSR     x14, x14, #32            // x14 = ((A * B * R) >> 32)
     ADD     x14, x14, #16            // x14 = e
-    MUL     x14, x14, w6             // x14 = e * P mod 2^64
-    LSR     w14, x14, #32            // w14 = (e * P) >> 32
+    SMULL   x14, w14, w6             // x14 = e * P mod 2^64
+    LSR     x14, x14, #32            // x14 = (e * P) >> 32
 
     // First layer twiddle multiplication for f[i + 3*d]
     // A = w15, B = w3
-    MUL     x15, x15, x3             // x15 = A * B mod 2^64
+    SMULL   x15, w15, w3             // x15 = A * B mod 2^64
     MUL     x15, x15, x7             // x15 = (A * B) * R mod 2^64
     LSR     x15, x15, #32            // x15 = ((A * B * R) >> 32)
     ADD     x15, x15, #16            // x15 = e
-    MUL     x15, x15, w6             // x15 = e * P mod 2^64
-    LSR     w15, x15, #32            // w15 = (e * P) >> 32
+    SMULL   x15, w15, w6             // x15 = e * P mod 2^64
+    LSR     x15, x15, #32            // w15 = (e * P) >> 32
 
     // First layer add and subtract (in-place updates)
 
@@ -59,21 +59,21 @@ butterfly_two_layers_ntt:
 
     // Second layer twiddle multiplication for f[i + d]
     // A = w13, B = w4 (twiddle factor w2)
-    MUL     x13, x13, x4             // x13 = A * B mod 2^64
+    SMULL   x13, w13, w4             // x13 = A * B mod 2^64
     MUL     x13, x13, x7             // x13 = (A * B) * R mod 2^64
     LSR     x13, x13, #32            // x13 = ((A * B * R) >> 32)
     ADD     x13, x13, #16            // x13 = e
-    MUL     x13, x13, w6             // x13 = e * P mod 2^64
-    LSR     w13, x13, #32            // w13 = (e * P) >> 32
+    SMULL   x13, w13, w6             // x13 = e * P mod 2^64
+    LSR     x13, x13, #32            // w13 = (e * P) >> 32
 
     // Second layer twiddle multiplication for f[i + 3*d]
     // A = w15, B = w5 (twiddle factor w3)
-    MUL     x15, x15, x5             // x15 = A * B mod 2^64
+    SMULL   x15, w15, w5             // x15 = A * B mod 2^64
     MUL     x15, x15, x7             // x15 = (A * B) * R mod 2^64
     LSR     x15, x15, #32            // x15 = ((A * B * R) >> 32)
     ADD     x15, x15, #16            // x15 = e
-    MUL     x15, x15, w6             // x15 = e * P mod 2^64
-    LSR     w15, x15, #32            // w15 = (e * P) >> 32
+    SMULL   x15, w15, w6             // x15 = e * P mod 2^64
+    LSR     x15, x15, #32            // w15 = (e * P) >> 32
 
     // Second layer add and subtract (in-place updates)
 
