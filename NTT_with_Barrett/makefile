@@ -6,7 +6,7 @@ CFLAGS = -O2 -Wall
 TARGET = program
 
 # Source files (excluding subtest.c)
-SRCS = main.c data.c utils.c
+SRCS = main.c data.c utils.c 
 # Object files
 OBJS = $(SRCS:.c=.o)
 

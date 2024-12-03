@@ -45,6 +45,8 @@ print("the second polynomial g is: ",g)
 
 # Write them into files called "data.h" and "data.c"
 
+correct = NegaCyclic_Conv(f,g,p)
+print("the correct result is: ",correct)
 
 
 with open("data.c", "w") as file:
@@ -67,10 +69,18 @@ with open("data.c", "w") as file:
             file.write(", ")
     file.write("};\n")
 
+    # Write the correct result
+    file.write("int32_t correct[N] = {")
+    for i in range(n):
+        file.write("%d" % correct[i])
+        if i < n - 1:
+            file.write(", ")
+
+
 with open("data.h", "w") as file:
     file.write("#define N %d\n" % n)
     file.write("extern int32_t f[N];\n")
     file.write("extern int32_t g[N];\n")
-print(NegaCyclic_Conv(f,g,p))
+    file.write("extern int32_t correct[N];\n")
 
 

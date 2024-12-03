@@ -1,8 +1,13 @@
+// Goal: Test the three layer NTT algorithm on length 8 poly mul
+// With Barrett, NEON 
+
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
 #include "poly_mul.h"
 #include "data.h"
+
 
 
 
@@ -36,8 +41,7 @@ int main() {
     }
     
 
-    //poly_mul_main(p, q, r);
-
+    
 
 
 
