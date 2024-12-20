@@ -4,30 +4,11 @@ from makemoduli import *
 
 
 logn = 10
-bit_length = 31
-num_of_moduli = 240
+bit_length = 30
+num_of_moduli = 1
 
-num_of_used_moduli_fg = [1, 1, 1, 2, 4, 8, 16, 28, 56, 108, 216]
-num_of_used_moduli_FG = [1, 2, 4, 8, 12, 20, 40, 80, 152, 304, 216]
-
-num_of_test = 10
-
-
-moduli = mk_moduli(bit_length, num_of_moduli)
-
-def NTT_friendly_test(p):
-    n = 1<<logn
-    if (p-1) % n == 0:
-        return True
-    else:
-        return False
-
-for p in moduli:
-    if not NTT_friendly_test(p):
-        print('The modulus is not NTT friendly')
-        exit()
-
-#print(moduli)
+num_of_used_moduli_fg = [1, 1, 1, 2,  4,  8, 16, 28,  56, 108, 216]
+num_of_used_moduli_FG = [1, 2, 4, 8, 12, 24, 44, 84, 160, 320, 216]
 
 
 

@@ -1,5 +1,6 @@
 {
     "files.associations": {
-        "ng_inner.h": "c"
+        "ng_inner.h": "c",
+        "data.h": "c"
     }
 }
